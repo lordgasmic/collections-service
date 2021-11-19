@@ -1,0 +1,27 @@
+{
+  "name": "funko",
+  "tables": [
+    {
+      "name": "funko_vw",
+      "id-column": "id",
+      "type": "primary",
+      "properties": [
+        {
+          "name": "id",
+          "column": "id",
+          "data-type": "string"
+        },
+        {
+          "name": "fandom",
+          "column": "fandom",
+          "data-type": "string"
+        },
+        {
+          "name": "name",
+          "column": "name",
+          "data-type": "string"
+        }
+      ]
+    }
+  ]
+}

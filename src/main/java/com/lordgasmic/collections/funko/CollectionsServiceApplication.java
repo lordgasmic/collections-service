@@ -20,7 +20,7 @@ public class CollectionsServiceApplication {
     public CommandLineRunner CommandLineRunnerBean() {
         return (args) -> {
             final CollectionsFramework cf = CollectionsFramework.getInstance();
-            final GSARepository repository = (GSARepository) cf.getGenericService("FunkoRepository");
+            final GSARepository repository = (GSARepository) cf.getGenericService("WineTastingRepository");
             log.info("repository {}", repository);
         };
     }

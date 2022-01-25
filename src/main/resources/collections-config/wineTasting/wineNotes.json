@@ -1,8 +1,8 @@
 {
-  "name": "wine notes",
+  "name": "wineNotes",
   "tables": [
     {
-      "name": "wine_notes",
+      "name": "wine_notes_vw",
       "id-column": "id",
       "type": "primary",
       "properties": [

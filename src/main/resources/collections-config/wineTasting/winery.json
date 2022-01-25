@@ -2,7 +2,7 @@
   "name": "winery",
   "tables": [
     {
-      "name": "winery",
+      "name": "winery_vw",
       "id-column": "id",
       "type": "primary",
       "properties": [

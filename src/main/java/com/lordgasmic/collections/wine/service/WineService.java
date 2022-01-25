@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 import java.sql.SQLException;
 import java.util.List;
 
+import static java.util.stream.Collectors.toList;
+
 @Service
 @Slf4j
 public class WineService {
@@ -21,10 +23,14 @@ public class WineService {
     public List<WineryResponse> getWineries() throws SQLException {
         final GSARepository repository = (GSARepository) Nucleus.getInstance().getGenericService(REPO_NAME);
         final List<RepositoryItem> items = repository.getAllRepositoryItems(WINERY_REPOSITORY_ITEM);
-        items.stream()
-             .peek(ri -> log.info((String) ri.getPropertyValue(PROPERTY_NAME)))
-             .peek(ri -> log.info((String) ri.getPropertyValue(PROPERTY_LOCATION)))
-             .forEach((ri) -> System.out.println());
-        return null;
+        return items.stream().map(WineService::convertRepositoryItemToWineryResponse).collect(toList());
+    }
+
+    private static WineryResponse convertRepositoryItemToWineryResponse(final RepositoryItem repositoryItem) {
+        final WineryResponse response = new WineryResponse();
+        response.setName((String) repositoryItem.getPropertyValue(PROPERTY_NAME));
+        response.setLocation((String) repositoryItem.getPropertyValue(PROPERTY_LOCATION));
+
+        return response;
     }
 }

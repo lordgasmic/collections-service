@@ -39,7 +39,7 @@ public class WineService {
 
     private static WineryResponse convertRepositoryItemToWineryResponse(final RepositoryItem repositoryItem) {
         final WineryResponse response = new WineryResponse();
-        response.setId(Integer.parseInt((String) repositoryItem.getPropertyValue(PROPERTY_ID)));
+        response.setId((Integer) repositoryItem.getPropertyValue(PROPERTY_ID));
         response.setName((String) repositoryItem.getPropertyValue(PROPERTY_NAME));
         response.setLocation((String) repositoryItem.getPropertyValue(PROPERTY_LOCATION));
 

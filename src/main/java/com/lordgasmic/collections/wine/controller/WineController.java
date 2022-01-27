@@ -34,7 +34,9 @@ public class WineController {
     public Object getWines(@RequestParam("wineId") final Optional<String> wineId,
                            @RequestParam("wineryId") final Optional<String> wineryId) throws SQLException {
         log.info("wineid: " + wineId.get());
+        log.info("wineid is empty: " + wineId.isEmpty());
         log.info("wineryId: " + wineryId.get());
+        log.info("winerid: " + wineryId.isEmpty());
         if (wineId.isEmpty() && wineryId.isEmpty()) {
             return wineService.getAllWines();
         } else if (wineId.isPresent()) {

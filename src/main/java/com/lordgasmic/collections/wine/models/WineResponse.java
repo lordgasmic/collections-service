@@ -4,8 +4,8 @@ import lombok.Data;
 
 @Data
 public class WineResponse {
+    private int id;
+    private int wineryId;
     private String name;
-    private String rating;
-    private String date;
     private String style;
 }

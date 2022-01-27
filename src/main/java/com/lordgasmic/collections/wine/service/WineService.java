@@ -20,8 +20,10 @@ public class WineService {
     private static final String WINERY_REPOSITORY_ITEM = "winery";
     private static final String WINES_REPOSITORY_ITEM = "wines";
     private static final String PROPERTY_ID = "id";
+    private static final String PROPERTY_WINERY_ID = "winery_id";
     private static final String PROPERTY_NAME = "name";
     private static final String PROPERTY_LOCATION = "location";
+    private static final String PROPERTY_STYLE = "style";
 
     private final GSARepository wineRepository;
 
@@ -67,7 +69,12 @@ public class WineService {
     }
 
     private static WineResponse convertRepositoryItemToWineResponse(final RepositoryItem repositoryItem) {
-        return null;
+        final WineResponse response = new WineResponse();
+        response.setId((Integer) repositoryItem.getPropertyValue(PROPERTY_ID));
+        response.setWineryId((Integer) repositoryItem.getPropertyValue(PROPERTY_WINERY_ID));
+        response.setName((String) repositoryItem.getPropertyValue(PROPERTY_NAME));
+        response.setStyle((String) repositoryItem.getPropertyValue(PROPERTY_STYLE));
+        return response;
     }
 
 }

@@ -20,7 +20,7 @@ public class WineService {
     private static final String WINERY_REPOSITORY_ITEM = "winery";
     private static final String WINES_REPOSITORY_ITEM = "wines";
     private static final String PROPERTY_ID = "id";
-    private static final String PROPERTY_WINERY_ID = "winery_id";
+    private static final String PROPERTY_WINERY_ID = "wineryId";
     private static final String PROPERTY_NAME = "name";
     private static final String PROPERTY_LOCATION = "location";
     private static final String PROPERTY_STYLE = "style";

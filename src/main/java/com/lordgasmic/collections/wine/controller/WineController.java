@@ -5,10 +5,12 @@ import com.lordgasmic.collections.wine.service.WineService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 public class WineController {
@@ -24,5 +26,16 @@ public class WineController {
     @GetMapping("/api/v1/wineries/{id}")
     public WineryResponse getWineryById(@PathVariable final String id) throws SQLException {
         return wineService.getWineryById(id);
+    }
+
+    @GetMapping("/api/v1/wines")
+    public Object getWines(@RequestParam final Optional<String> wineId, @RequestParam final Optional<String> wineryId) throws SQLException {
+        if (wineId.isEmpty() && wineryId.isEmpty()) {
+            return wineService.getAllWines();
+        } else if (wineId.isPresent()) {
+            return wineService.getWine(wineId.get());
+        } else {
+            return wineService.getWinesByWineryId(wineryId.get());
+        }
     }
 }

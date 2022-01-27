@@ -33,10 +33,8 @@ public class WineController {
     @GetMapping("/api/v1/wines")
     public Object getWines(@RequestParam("wineId") final Optional<String> wineId,
                            @RequestParam("wineryId") final Optional<String> wineryId) throws SQLException {
-        log.info("wineid: " + wineId.get());
-        log.info("wineid is empty: " + wineId.get());
-        log.info("wineryId: " + wineryId.get());
-        log.info("winerid: " + wineryId.get());
+        log.info("wineid: " + wineId.isEmpty());
+        log.info("wineid: " + wineId.isPresent());
         if (wineId.isEmpty() && wineryId.isEmpty()) {
             return wineService.getAllWines();
         } else if (wineId.isPresent()) {

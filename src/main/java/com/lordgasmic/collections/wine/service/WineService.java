@@ -49,7 +49,7 @@ public class WineService {
     public List<WineResponse> getWinesByWineryId(final String id) throws SQLException {
         final List<RepositoryItem> items = wineRepository.getAllRepositoryItems(WINES_REPOSITORY_ITEM);
         return items.stream()
-                    .filter(ri -> ri.getPropertyValue("id").equals(id))
+                    .filter(ri -> ri.getPropertyValue(PROPERTY_WINERY_ID).equals(id))
                     .map(WineService::convertRepositoryItemToWineResponse)
                     .collect(toList());
     }

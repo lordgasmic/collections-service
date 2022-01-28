@@ -60,7 +60,7 @@ public class WineController {
         if (user.isEmpty() && wineId.isEmpty()) {
             return wineService.getAllWineRatings();
         } else if (wineId.isPresent()) {
-            return wineService.getWineRatingsByWineId(wineId.get());
+            return wineService.getWineRatingByWineId(wineId.get());
         } else {
             return wineService.getWineRatingsByUser(user.get());
         }

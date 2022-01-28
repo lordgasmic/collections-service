@@ -41,4 +41,28 @@ public class WineController {
             return wineService.getWinesByWineryId(wineryId.get());
         }
     }
+
+    @GetMapping("/api/v1/wineNotes")
+    public Object getWineNotes(@RequestParam("user") final Optional<String> user,
+                               @RequestParam("wineId") final Optional<Integer> wineId) throws SQLException {
+        if (user.isPresent() && wineId.isEmpty()) {
+            return wineService.getAllWineNotes();
+        } else if (wineId.isPresent()) {
+            return wineService.getWineNotesByWineId(wineId.get());
+        } else {
+            return wineService.getWineNotesByUser(user.get());
+        }
+    }
+
+    @GetMapping("/api/v1/wineRating")
+    public Object getWineRating(@RequestParam("user") final Optional<String> user,
+                                @RequestParam("wineId") final Optional<Integer> wineId) throws SQLException {
+        if (user.isPresent() && wineId.isEmpty()) {
+            return wineService.getAllWineRatings();
+        } else if (wineId.isPresent()) {
+            return wineService.getWineRatingsByWineId(wineId.get());
+        } else {
+            return wineService.getWineRatingsByUser(user.get());
+        }
+    }
 }

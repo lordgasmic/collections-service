@@ -25,6 +25,7 @@ public class WineService {
     private static final String WINE_RATING_REPOSITORY_ITEM = "wineRating";
     private static final String PROPERTY_ID = "id";
     private static final String PROPERTY_WINERY_ID = "wineryId";
+    private static final String PROPERTY_WINE_ID = "wineId";
     private static final String PROPERTY_NAME = "name";
     private static final String PROPERTY_LOCATION = "location";
     private static final String PROPERTY_STYLE = "style";
@@ -131,7 +132,7 @@ public class WineService {
     private static WineNoteResponse convertRepositoryItemToWineNoteResponse(final RepositoryItem repositoryItem) {
         final WineNoteResponse response = new WineNoteResponse();
         response.setId((Integer) repositoryItem.getPropertyValue(PROPERTY_ID));
-        response.setWineId((Integer) repositoryItem.getPropertyValue(PROPERTY_WINERY_ID));
+        response.setWineId((Integer) repositoryItem.getPropertyValue(PROPERTY_WINE_ID));
         response.setUser((String) repositoryItem.getPropertyValue(PROPERTY_USER));
         response.setNote((String) repositoryItem.getPropertyValue(PROPERTY_NOTE));
         response.setOrdinal((Integer) repositoryItem.getPropertyValue(PROPERTY_ORDINAL));
@@ -141,7 +142,7 @@ public class WineService {
 
     private static WineRatingResponse convertRepositoryItemToWineRatingResponse(final RepositoryItem repositoryItem) {
         final WineRatingResponse response = new WineRatingResponse();
-        response.setWineId((Integer) repositoryItem.getPropertyValue(PROPERTY_WINERY_ID));
+        response.setWineId((Integer) repositoryItem.getPropertyValue(PROPERTY_WINE_ID));
         response.setUser((String) repositoryItem.getPropertyValue(PROPERTY_USER));
         response.setDate((String) repositoryItem.getPropertyValue(PROPERTY_DATE));
         response.setRating((String) repositoryItem.getPropertyValue(PROPERTY_RATING));

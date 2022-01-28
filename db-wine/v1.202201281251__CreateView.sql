@@ -13,4 +13,3 @@ grant select, insert, update, delete on web.wine_notes_vw to 'web_appl'@'%';
 create or replace view wine_rating_vw as select * from wine_rating;
 grant select, insert, update, delete on web.wine_rating_vw to 'web_appl'@'localhost';
 grant select, insert, update, delete on web.wine_rating_vw to 'web_appl'@'%';
-vice.lambda$getWineNotesByWineId$2(WineService.java:87) ~[classes!/:0.0.1-SNAPSHOT]

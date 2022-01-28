@@ -85,7 +85,7 @@ public class WineService {
     public List<WineNoteResponse> getWineNotesByWineId(final int wineId) throws SQLException {
         final List<RepositoryItem> items = wineRepository.getAllRepositoryItems(WINE_NOTES_REPOSITORY_ITEM);
         return items.stream()
-                    .filter(ri -> ri.getPropertyValue(PROPERTY_WINERY_ID).equals(wineId))
+                    .filter(ri -> ri.getPropertyValue(PROPERTY_WINE_ID).equals(wineId))
                     .map(WineService::convertRepositoryItemToWineNoteResponse)
                     .collect(toList());
     }
@@ -98,7 +98,7 @@ public class WineService {
     public List<WineRatingResponse> getWineRatingsByWineId(final int wineId) throws SQLException {
         final List<RepositoryItem> items = wineRepository.getAllRepositoryItems(WINE_RATING_REPOSITORY_ITEM);
         return items.stream()
-                    .filter(ri -> ri.getPropertyValue(PROPERTY_WINERY_ID).equals(wineId))
+                    .filter(ri -> ri.getPropertyValue(PROPERTY_WINE_ID).equals(wineId))
                     .map(WineService::convertRepositoryItemToWineRatingResponse)
                     .collect(toList());
     }

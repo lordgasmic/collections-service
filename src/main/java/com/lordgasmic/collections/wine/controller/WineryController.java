@@ -32,7 +32,7 @@ public class WineryController {
     }
 
     @PutMapping("/api/v1/wineries")
-    public void addWinery(@RequestBody final WineryRequest wineryRequest) {
-
+    public WineryResponse addWinery(@RequestBody final WineryRequest wineryRequest) throws SQLException {
+        return service.addWinery(wineryRequest);
     }
 }

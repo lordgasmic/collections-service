@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -33,7 +34,7 @@ public class WineNotesController {
     }
 
     @PutMapping("/api/v1/wineNotes")
-    public void addWineNote(@RequestBody final WineNoteRequest wineNoteRequest) {
-
+    public Object addWineNotes(@RequestBody final List<WineNoteRequest> wineNoteRequests) {
+        return service.addWineNotes(wineNoteRequests);
     }
 }

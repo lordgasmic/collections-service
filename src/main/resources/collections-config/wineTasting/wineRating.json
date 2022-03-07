@@ -3,9 +3,15 @@
   "tables": [
     {
       "name": "wine_rating_vw",
-      "id-column": "wine_id",
+      "id-column": "id",
+      "id-column-name": "id",
       "type": "primary",
       "properties": [
+        {
+          "name": "id",
+          "column": "id",
+          "data-type": "int"
+        },
         {
           "name": "wineId",
           "column": "wine_id",

@@ -2,8 +2,10 @@ package com.lordgasmic.collections.wine.service;
 
 import com.lordgasmic.collections.Nucleus;
 import com.lordgasmic.collections.repository.GSARepository;
+import com.lordgasmic.collections.repository.MutableRepositoryItem;
 import com.lordgasmic.collections.repository.RepositoryItem;
 import com.lordgasmic.collections.wine.config.WineRatingConstants;
+import com.lordgasmic.collections.wine.models.WineRatingRequest;
 import com.lordgasmic.collections.wine.models.WineRatingResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -11,6 +13,10 @@ import org.springframework.stereotype.Service;
 import java.sql.SQLException;
 import java.util.List;
 
+import static com.lordgasmic.collections.wine.config.WineRatingConstants.PROPERTY_DATE;
+import static com.lordgasmic.collections.wine.config.WineRatingConstants.PROPERTY_RATING;
+import static com.lordgasmic.collections.wine.config.WineRatingConstants.PROPERTY_USER;
+import static com.lordgasmic.collections.wine.config.WineRatingConstants.PROPERTY_WINE_ID;
 import static com.lordgasmic.collections.wine.config.WineRatingConstants.WINE_RATING_REPOSITORY_ITEM;
 import static java.util.stream.Collectors.toList;
 
@@ -45,6 +51,18 @@ public class WineRatingService {
                     .filter(ri -> ri.getPropertyValue(WineRatingConstants.PROPERTY_USER).equals(user))
                     .map(WineRatingService::convertRepositoryItemToWineRatingResponse)
                     .collect(toList());
+    }
+
+    public WineRatingResponse addWineRating(final WineRatingRequest request) throws SQLException {
+        final MutableRepositoryItem item = wineRepository.createItem(WINE_RATING_REPOSITORY_ITEM);
+
+        item.setProperty(PROPERTY_WINE_ID, request.getWineId());
+        item.setProperty(PROPERTY_USER, request.getUser());
+        item.setProperty(PROPERTY_DATE, request.getDate());
+        item.setProperty(PROPERTY_RATING, request.getRating());
+
+        final RepositoryItem addedItem = wineRepository.addItem(item);
+        return convertRepositoryItemToWineRatingResponse(addedItem);
     }
 
     private static WineRatingResponse convertRepositoryItemToWineRatingResponse(final RepositoryItem repositoryItem) {

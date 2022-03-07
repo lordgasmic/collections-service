@@ -33,7 +33,7 @@ public class WineRatingController {
     }
 
     @PutMapping("/api/v1/wineRating")
-    public void addWineRating(@RequestBody final WineRatingRequest wineRatingRequest) {
-
+    public Object addWineRating(@RequestBody final WineRatingRequest wineRatingRequest) throws SQLException {
+        return service.addWineRating(wineRatingRequest);
     }
 }

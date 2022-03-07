@@ -1,7 +1,7 @@
 package com.lordgasmic.collections.wine.controller;
 
 import com.lordgasmic.collections.wine.models.WineNoteRequest;
-import com.lordgasmic.collections.wine.service.WineService;
+import com.lordgasmic.collections.wine.service.WineNotesService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,17 +18,17 @@ import java.util.Optional;
 public class WineNotesController {
 
     @Autowired
-    private WineService wineService;
+    private WineNotesService service;
 
     @GetMapping("/api/v1/wineNotes")
     public Object getWineNotes(@RequestParam("user") final Optional<String> user,
                                @RequestParam("wineId") final Optional<Integer> wineId) throws SQLException {
         if (user.isEmpty() && wineId.isEmpty()) {
-            return wineService.getAllWineNotes();
+            return service.getAllWineNotes();
         } else if (wineId.isPresent()) {
-            return wineService.getWineNotesByWineId(wineId.get());
+            return service.getWineNotesByWineId(wineId.get());
         } else {
-            return wineService.getWineNotesByUser(user.get());
+            return service.getWineNotesByUser(user.get());
         }
     }
 

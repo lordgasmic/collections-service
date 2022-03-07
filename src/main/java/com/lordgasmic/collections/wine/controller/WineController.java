@@ -18,17 +18,17 @@ import java.util.Optional;
 public class WineController {
 
     @Autowired
-    private WineService wineService;
+    private WineService service;
 
     @GetMapping("/api/v1/wines")
     public Object getWines(@RequestParam("wineId") final Optional<String> wineId,
                            @RequestParam("wineryId") final Optional<String> wineryId) throws SQLException {
         if (wineId.isEmpty() && wineryId.isEmpty()) {
-            return wineService.getAllWines();
+            return service.getAllWines();
         } else if (wineId.isPresent()) {
-            return wineService.getWine(wineId.get());
+            return service.getWine(wineId.get());
         } else {
-            return wineService.getWinesByWineryId(wineryId.get());
+            return service.getWinesByWineryId(wineryId.get());
         }
     }
 

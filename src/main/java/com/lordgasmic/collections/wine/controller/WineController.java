@@ -1,6 +1,7 @@
 package com.lordgasmic.collections.wine.controller;
 
 import com.lordgasmic.collections.wine.models.WineRequest;
+import com.lordgasmic.collections.wine.models.WineResponse;
 import com.lordgasmic.collections.wine.service.WineService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +34,7 @@ public class WineController {
     }
 
     @PutMapping("/api/v1/wines")
-    public void addWine(@RequestBody final WineRequest wineRequest) {
-
+    public WineResponse addWine(@RequestBody final WineRequest wineRequest) throws SQLException {
+        return service.addWine(wineRequest);
     }
 }

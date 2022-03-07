@@ -2,8 +2,10 @@ package com.lordgasmic.collections.wine.service;
 
 import com.lordgasmic.collections.Nucleus;
 import com.lordgasmic.collections.repository.GSARepository;
+import com.lordgasmic.collections.repository.MutableRepositoryItem;
 import com.lordgasmic.collections.repository.RepositoryItem;
 import com.lordgasmic.collections.wine.config.WineConstants;
+import com.lordgasmic.collections.wine.models.WineRequest;
 import com.lordgasmic.collections.wine.models.WineResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -11,8 +13,10 @@ import org.springframework.stereotype.Service;
 import java.sql.SQLException;
 import java.util.List;
 
+import static com.lordgasmic.collections.wine.config.WineConstants.PROPERTY_STYLE;
 import static com.lordgasmic.collections.wine.config.WineConstants.PROPERTY_WINERY_ID;
-import static com.lordgasmic.collections.wine.config.WineConstants.WINES_REPOSITORY_ITEM;
+import static com.lordgasmic.collections.wine.config.WineConstants.WINE_REPOSITORY_ITEM;
+import static com.lordgasmic.collections.wine.config.WineryConstants.PROPERTY_NAME;
 import static java.util.stream.Collectors.toList;
 
 @Service
@@ -27,12 +31,12 @@ public class WineService {
     }
 
     public List<WineResponse> getAllWines() throws SQLException {
-        final List<RepositoryItem> items = wineRepository.getAllRepositoryItems(WINES_REPOSITORY_ITEM);
+        final List<RepositoryItem> items = wineRepository.getAllRepositoryItems(WINE_REPOSITORY_ITEM);
         return items.stream().map(WineService::convertRepositoryItemToWineResponse).collect(toList());
     }
 
     public List<WineResponse> getWinesByWineryId(final String id) throws SQLException {
-        final List<RepositoryItem> items = wineRepository.getAllRepositoryItems(WINES_REPOSITORY_ITEM);
+        final List<RepositoryItem> items = wineRepository.getAllRepositoryItems(WINE_REPOSITORY_ITEM);
         return items.stream()
                     .filter(ri -> ri.getPropertyValue(PROPERTY_WINERY_ID).equals(Integer.parseInt(id)))
                     .map(WineService::convertRepositoryItemToWineResponse)
@@ -40,8 +44,18 @@ public class WineService {
     }
 
     public WineResponse getWine(final String id) throws SQLException {
-        final RepositoryItem item = wineRepository.getRepositoryItem(id, WINES_REPOSITORY_ITEM);
+        final RepositoryItem item = wineRepository.getRepositoryItem(id, WINE_REPOSITORY_ITEM);
         return convertRepositoryItemToWineResponse(item);
+    }
+
+    public WineResponse addWine(final WineRequest request) throws SQLException {
+        final MutableRepositoryItem item = wineRepository.createItem(WINE_REPOSITORY_ITEM);
+        item.setProperty(PROPERTY_WINERY_ID, request.getWineryId());
+        item.setProperty(PROPERTY_NAME, request.getName());
+        item.setProperty(PROPERTY_STYLE, request.getStyle());
+        final RepositoryItem addedItem = wineRepository.addItem(item);
+
+        return convertRepositoryItemToWineResponse(addedItem);
     }
 
     private static WineResponse convertRepositoryItemToWineResponse(final RepositoryItem repositoryItem) {

@@ -9,10 +9,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class CollectionsServiceApplication {
 
     public static void main(final String... args) {
+        Nucleus.start();
         SpringApplication.run(CollectionsServiceApplication.class, args);
         //        final GSARepository repository = (GSARepository) cf.getGenericService("WineTastingRepository");
         //        log.info("repository {}", repository);
         //        repository.getAllRepositoryItems("winery").forEach(System.out::println);
-        Nucleus.start();
     }
 }

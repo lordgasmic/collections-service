@@ -67,6 +67,7 @@ public class WineRatingService {
 
     private static WineRatingResponse convertRepositoryItemToWineRatingResponse(final RepositoryItem repositoryItem) {
         final WineRatingResponse response = new WineRatingResponse();
+        response.setId((Integer) repositoryItem.getPropertyValue(WineRatingConstants.PROPERTY_ID));
         response.setWineId((Integer) repositoryItem.getPropertyValue(WineRatingConstants.PROPERTY_WINE_ID));
         response.setUser((String) repositoryItem.getPropertyValue(WineRatingConstants.PROPERTY_USER));
         response.setDate((String) repositoryItem.getPropertyValue(WineRatingConstants.PROPERTY_DATE));

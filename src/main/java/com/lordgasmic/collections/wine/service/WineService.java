@@ -11,6 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.sql.SQLException;
+import java.util.Comparator;
 import java.util.List;
 
 import static com.lordgasmic.collections.wine.config.WineConstants.PROPERTY_STYLE;
@@ -40,6 +41,7 @@ public class WineService {
         return items.stream()
                     .filter(ri -> ri.getPropertyValue(PROPERTY_WINERY_ID).equals(Integer.parseInt(id)))
                     .map(WineService::convertRepositoryItemToWineResponse)
+                    .sorted(Comparator.comparing(WineResponse::getName))
                     .collect(toList());
     }
 

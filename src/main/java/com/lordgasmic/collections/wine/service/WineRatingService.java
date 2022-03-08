@@ -39,7 +39,7 @@ public class WineRatingService {
     public WineRatingResponse getWineRatingByWineId(final int wineId) throws SQLException {
         final List<RepositoryItem> items = wineRepository.getAllRepositoryItems(WINE_RATING_REPOSITORY_ITEM);
         return items.stream()
-                    .filter(ri -> ri.getPropertyValue(WineRatingConstants.PROPERTY_WINE_ID).equals(wineId))
+                    .filter(ri -> ri.getPropertyValue(PROPERTY_WINE_ID).equals(wineId))
                     .map(WineRatingService::convertRepositoryItemToWineRatingResponse)
                     .collect(toList())
                     .get(0);
@@ -48,7 +48,16 @@ public class WineRatingService {
     public List<WineRatingResponse> getWineRatingsByUser(final String user) throws SQLException {
         final List<RepositoryItem> items = wineRepository.getAllRepositoryItems(WINE_RATING_REPOSITORY_ITEM);
         return items.stream()
-                    .filter(ri -> ri.getPropertyValue(WineRatingConstants.PROPERTY_USER).equals(user))
+                    .filter(ri -> ri.getPropertyValue(PROPERTY_USER).equals(user))
+                    .map(WineRatingService::convertRepositoryItemToWineRatingResponse)
+                    .collect(toList());
+    }
+
+    public List<WineRatingResponse> getWineRatingsByWineIdByUser(final int wineId, final String user) throws SQLException {
+        final List<RepositoryItem> items = wineRepository.getAllRepositoryItems(WINE_RATING_REPOSITORY_ITEM);
+        return items.stream()
+                    .filter(ri -> ri.getPropertyValue(PROPERTY_WINE_ID).equals(wineId))
+                    .filter(ri -> ri.getPropertyValue(PROPERTY_USER).equals(user))
                     .map(WineRatingService::convertRepositoryItemToWineRatingResponse)
                     .collect(toList());
     }
@@ -68,8 +77,8 @@ public class WineRatingService {
     private static WineRatingResponse convertRepositoryItemToWineRatingResponse(final RepositoryItem repositoryItem) {
         final WineRatingResponse response = new WineRatingResponse();
         response.setId((Integer) repositoryItem.getPropertyValue(WineRatingConstants.PROPERTY_ID));
-        response.setWineId((Integer) repositoryItem.getPropertyValue(WineRatingConstants.PROPERTY_WINE_ID));
-        response.setUser((String) repositoryItem.getPropertyValue(WineRatingConstants.PROPERTY_USER));
+        response.setWineId((Integer) repositoryItem.getPropertyValue(PROPERTY_WINE_ID));
+        response.setUser((String) repositoryItem.getPropertyValue(PROPERTY_USER));
         response.setDate((String) repositoryItem.getPropertyValue(WineRatingConstants.PROPERTY_DATE));
         response.setRating((String) repositoryItem.getPropertyValue(WineRatingConstants.PROPERTY_RATING));
         return response;

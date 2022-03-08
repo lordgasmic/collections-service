@@ -53,6 +53,15 @@ public class WineNotesService {
                     .collect(toList());
     }
 
+    public List<WineNoteResponse> getWineNotesByWineIdByUser(final int wineId, final String user) throws SQLException {
+        final List<RepositoryItem> items = wineRepository.getAllRepositoryItems(WINE_NOTES_REPOSITORY_ITEM);
+        return items.stream()
+                    .filter(ri -> ri.getPropertyValue(WineNotesConstants.PROPERTY_WINE_ID).equals(wineId))
+                    .filter(ri -> ri.getPropertyValue(PROPERTY_USER).equals(user))
+                    .map(WineNotesService::convertRepositoryItemToWineNoteResponse)
+                    .collect(toList());
+    }
+
     public List<WineNoteResponse> addWineNotes(final List<WineNoteRequest> requests) {
         return requests.stream()
                        .map(this::createItem)

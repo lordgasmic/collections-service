@@ -25,6 +25,8 @@ public class WineRatingController {
                                 @RequestParam("wineId") final Optional<Integer> wineId) throws SQLException {
         if (user.isEmpty() && wineId.isEmpty()) {
             return service.getAllWineRatings();
+        } else if (wineId.isPresent() && user.isPresent()) {
+            return service.getWineRatingsByWineIdByUser(wineId.get(), user.get());
         } else if (wineId.isPresent()) {
             return service.getWineRatingByWineId(wineId.get());
         } else {

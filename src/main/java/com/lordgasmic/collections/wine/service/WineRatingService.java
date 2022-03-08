@@ -36,13 +36,12 @@ public class WineRatingService {
         return items.stream().map(WineRatingService::convertRepositoryItemToWineRatingResponse).collect(toList());
     }
 
-    public WineRatingResponse getWineRatingByWineId(final int wineId) throws SQLException {
+    public List<WineRatingResponse> getWineRatingByWineId(final int wineId) throws SQLException {
         final List<RepositoryItem> items = wineRepository.getAllRepositoryItems(WINE_RATING_REPOSITORY_ITEM);
         return items.stream()
                     .filter(ri -> ri.getPropertyValue(PROPERTY_WINE_ID).equals(wineId))
                     .map(WineRatingService::convertRepositoryItemToWineRatingResponse)
-                    .collect(toList())
-                    .get(0);
+                    .collect(toList());
     }
 
     public List<WineRatingResponse> getWineRatingsByUser(final String user) throws SQLException {

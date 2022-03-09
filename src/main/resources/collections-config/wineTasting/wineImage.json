@@ -1,0 +1,33 @@
+{
+  "name": "wineImage",
+  "tables": [
+    {
+      "name": "wine_image_vw",
+      "id-column": "id",
+      "id-column-name": "id",
+      "type": "primary",
+      "properties": [
+        {
+          "name": "id",
+          "column": "id",
+          "data-type": "int"
+        },
+        {
+          "name": "wineId",
+          "column": "wine_id",
+          "data-type": "int"
+        },
+        {
+          "name": "front",
+          "column": "front",
+          "data-type": "string"
+        },
+        {
+          "name": "back",
+          "column": "back",
+          "data-type": "string"
+        }
+      ]
+    }
+  ]
+}

@@ -41,7 +41,7 @@ public class WineService {
         return items.stream()
                     .filter(ri -> ri.getPropertyValue(PROPERTY_WINERY_ID).equals(Integer.parseInt(id)))
                     .map(WineService::convertRepositoryItemToWineResponse)
-                    .sorted(Comparator.comparing(WineResponse::getName))
+                    .sorted(Comparator.comparing(WineResponse::getName, String.CASE_INSENSITIVE_ORDER))
                     .collect(toList());
     }
 

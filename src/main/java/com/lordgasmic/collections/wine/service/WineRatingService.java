@@ -5,6 +5,7 @@ import com.lordgasmic.collections.repository.GSARepository;
 import com.lordgasmic.collections.repository.MutableRepositoryItem;
 import com.lordgasmic.collections.repository.RepositoryItem;
 import com.lordgasmic.collections.wine.config.WineRatingConstants;
+import com.lordgasmic.collections.wine.models.WineFriendsRequest;
 import com.lordgasmic.collections.wine.models.WineRatingRequest;
 import com.lordgasmic.collections.wine.models.WineRatingResponse;
 import lombok.extern.slf4j.Slf4j;
@@ -57,6 +58,15 @@ public class WineRatingService {
         return items.stream()
                     .filter(ri -> ri.getPropertyValue(PROPERTY_WINE_ID).equals(wineId))
                     .filter(ri -> ri.getPropertyValue(PROPERTY_USER).equals(user))
+                    .map(WineRatingService::convertRepositoryItemToWineRatingResponse)
+                    .collect(toList());
+    }
+
+    public List<WineRatingResponse> getWineRatingsByUsersByWineIds(final WineFriendsRequest request) throws SQLException {
+        final List<RepositoryItem> items = wineRepository.getAllRepositoryItems(WINE_RATING_REPOSITORY_ITEM);
+        return items.stream()
+                    .filter(i -> request.getWineIds().contains((Integer) i.getPropertyValue(PROPERTY_WINE_ID)))
+                    .filter(i -> request.getUsers().contains((String) i.getPropertyValue(PROPERTY_USER)))
                     .map(WineRatingService::convertRepositoryItemToWineRatingResponse)
                     .collect(toList());
     }

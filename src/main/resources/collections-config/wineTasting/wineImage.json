@@ -18,13 +18,18 @@
           "data-type": "int"
         },
         {
-          "name": "front",
-          "column": "front",
+          "name": "label",
+          "column": "label",
           "data-type": "string"
         },
         {
-          "name": "back",
-          "column": "back",
+          "name": "image",
+          "column": "image",
+          "data-type": "binary"
+        },
+        {
+          "name": "mimeType",
+          "column": "mime_type",
           "data-type": "string"
         }
       ]

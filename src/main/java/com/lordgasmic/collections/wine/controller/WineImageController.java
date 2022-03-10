@@ -18,15 +18,13 @@ import java.util.zip.Inflater;
 public class WineImageController {
 
     @PutMapping("/api/v1/wineImages")
-    public Object addWineImage(@RequestParam("imageFile") final MultipartFile imageFile) throws IOException {
+    public Object addWineImage(@RequestParam("wineId") final int wineId, @RequestParam("imageFile") final MultipartFile imageFile) throws IOException {
         log.info("Image Upload:");
+        log.info("wine id: " + wineId);
         log.info("Filename: " + imageFile.getOriginalFilename());
         log.info("Filename: " + imageFile.getName());
-        log.info("File Bytes: " + imageFile.getBytes().length);
-        log.info("File size: " + imageFile.getSize());
         log.info("Content-type: " + imageFile.getContentType());
 
-        decompressBytes(compressBytes(imageFile.getBytes()));
 
         return new WineResponse();
     }

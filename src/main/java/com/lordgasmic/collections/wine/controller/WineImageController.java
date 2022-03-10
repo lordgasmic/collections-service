@@ -17,7 +17,10 @@ public class WineImageController {
     public Object addWineImage(@RequestParam("imageFile") final MultipartFile imageFile) throws IOException {
         log.info("Image Upload:");
         log.info("Filename: " + imageFile.getOriginalFilename());
-        log.info(("File Bytes: " + imageFile.getBytes().length));
+        log.info("Filename: " + imageFile.getName());
+        log.info("File Bytes: " + imageFile.getBytes().length);
+        log.info("File size: " + imageFile.getSize());
+        log.info("Content-type: " + imageFile.getContentType());
 
         return new WineResponse();
     }

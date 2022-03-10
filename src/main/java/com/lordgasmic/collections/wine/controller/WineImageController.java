@@ -1,5 +1,6 @@
 package com.lordgasmic.collections.wine.controller;
 
+import com.lordgasmic.collections.wine.models.WineResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -18,6 +19,6 @@ public class WineImageController {
         log.info("Filename: " + imageFile.getOriginalFilename());
         log.info(("File Bytes: " + imageFile.getBytes().length));
 
-        return "{'derp':'derp'";
+        return new WineResponse();
     }
 }

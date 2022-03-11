@@ -1,7 +1,10 @@
 package com.lordgasmic.collections.wine.controller;
 
-import com.lordgasmic.collections.wine.models.WineResponse;
+import com.lordgasmic.collections.wine.models.WineImageResponse;
+import com.lordgasmic.collections.wine.service.WineImageService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -9,6 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.zip.DataFormatException;
 import java.util.zip.Deflater;
 import java.util.zip.Inflater;
@@ -17,19 +21,19 @@ import java.util.zip.Inflater;
 @Slf4j
 public class WineImageController {
 
+    @Autowired
+    private WineImageService service;
+
     @PutMapping("/api/v1/wineImages")
-    public Object addWineImage(@RequestParam("wineId") final int wineId,
-                               @RequestParam("label") final String label,
-                               @RequestParam("imageFile") final MultipartFile imageFile) throws IOException {
-        log.info("Image Upload:");
-        log.info("wine id: " + wineId);
-        log.info("label: " + label);
-        log.info("Filename: " + imageFile.getOriginalFilename());
-        log.info("Filename: " + imageFile.getName());
-        log.info("Content-type: " + imageFile.getContentType());
+    public WineImageResponse addWineImage(@RequestParam("wineId") final int wineId,
+                                          @RequestParam("label") final String label,
+                                          @RequestParam("imageFile") final MultipartFile imageFile) throws IOException, SQLException {
+        return service.addWineImage(wineId, label, imageFile);
+    }
 
-
-        return new WineResponse();
+    @GetMapping("/api/v1/wineImages")
+    public WineImageResponse getWineImages(@RequestParam("wineId") final int wineId) throws SQLException {
+        return service.getWineImages(wineId);
     }
 
     // compress the image bytes before storing it in the database

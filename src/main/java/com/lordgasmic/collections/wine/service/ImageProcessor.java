@@ -29,7 +29,7 @@ public class ImageProcessor {
             final double widthDiff = origWidth / scaleRatio;
             final int newWidth = (int) (origWidth - widthDiff);
 
-            final Image resizeImage = originalSize.getScaledInstance(newWidth, newHeight, Image.SCALE_DEFAULT);
+            final Image resizeImage = originalSize.getScaledInstance(newWidth, newHeight, Image.SCALE_SMOOTH);
             final BufferedImage bufferedImage = new BufferedImage(newWidth, newHeight, BufferedImage.TYPE_INT_RGB);
             bufferedImage.getGraphics().drawImage(resizeImage, 0, 0, null);
             final ByteArrayOutputStream bos = new ByteArrayOutputStream();

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.sql.SQLException;
+import java.util.Optional;
 
 @RestController
 @Slf4j
@@ -20,13 +21,13 @@ public class WineNotesController {
     private WineNotesService service;
 
     @GetMapping("/api/v1/wineNotes")
-    public Object getWineNotes(@RequestParam("user") final String user, @RequestParam("wineId") final Integer wineId) throws SQLException {
-        if (user == null && wineId == null) {
+    public Object getWineNotes(@RequestParam("user") final String user, @RequestParam("wineId") final Optional<Integer> wineId) throws SQLException {
+        if (user == null && wineId.isEmpty()) {
             return service.getAllWineNotes();
-        } else if (user != null && wineId != null) {
-            return service.getWineNotesByWineIdByUser(wineId, user);
-        } else if (wineId != null) {
-            return service.getWineNotesByWineId(wineId);
+        } else if (user != null && wineId.isPresent()) {
+            return service.getWineNotesByWineIdByUser(wineId.get(), user);
+        } else if (wineId.isPresent()) {
+            return service.getWineNotesByWineId(wineId.get());
         } else {
             return service.getWineNotesByUser(user);
         }

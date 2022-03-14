@@ -11,8 +11,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.sql.SQLException;
-import java.util.List;
-import java.util.Optional;
 
 @RestController
 @Slf4j
@@ -22,21 +20,20 @@ public class WineNotesController {
     private WineNotesService service;
 
     @GetMapping("/api/v1/wineNotes")
-    public Object getWineNotes(@RequestParam("user") final Optional<String> user,
-                               @RequestParam("wineId") final Optional<Integer> wineId) throws SQLException {
-        if (user.isEmpty() && wineId.isEmpty()) {
+    public Object getWineNotes(@RequestParam("user") final String user, @RequestParam("wineId") final Integer wineId) throws SQLException {
+        if (user == null && wineId == null) {
             return service.getAllWineNotes();
-        } else if (user.isPresent() && wineId.isPresent()) {
-            return service.getWineNotesByWineIdByUser(wineId.get(), user.get());
-        } else if (wineId.isPresent()) {
-            return service.getWineNotesByWineId(wineId.get());
+        } else if (user != null && wineId != null) {
+            return service.getWineNotesByWineIdByUser(wineId, user);
+        } else if (wineId != null) {
+            return service.getWineNotesByWineId(wineId);
         } else {
-            return service.getWineNotesByUser(user.get());
+            return service.getWineNotesByUser(user);
         }
     }
 
     @PutMapping("/api/v1/wineNotes")
-    public Object addWineNotes(@RequestBody final List<WineNoteRequest> wineNoteRequests) {
-        return service.addWineNotes(wineNoteRequests);
+    public Object addWineNotes(@RequestBody final WineNoteRequest wineNoteRequest) throws SQLException {
+        return service.addWineNotes(wineNoteRequest);
     }
 }

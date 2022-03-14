@@ -5,6 +5,7 @@ import com.lordgasmic.collections.repository.GSARepository;
 import com.lordgasmic.collections.repository.MutableRepositoryItem;
 import com.lordgasmic.collections.repository.RepositoryItem;
 import com.lordgasmic.collections.wine.config.WineNotesConstants;
+import com.lordgasmic.collections.wine.models.WineNoteOutput;
 import com.lordgasmic.collections.wine.models.WineNoteRequest;
 import com.lordgasmic.collections.wine.models.WineNoteResponse;
 import lombok.extern.slf4j.Slf4j;
@@ -32,53 +33,57 @@ public class WineNotesService {
         wineRepository = (GSARepository) Nucleus.getInstance().getGenericService(REPO_NAME);
     }
 
-    public List<WineNoteResponse> getAllWineNotes() throws SQLException {
+    public WineNoteResponse getAllWineNotes() throws SQLException {
         final List<RepositoryItem> items = wineRepository.getAllRepositoryItems(WINE_NOTES_REPOSITORY_ITEM);
-        return items.stream().map(WineNotesService::convertRepositoryItemToWineNoteResponse).collect(toList());
+        final List<WineNoteOutput> wineNotes = items.stream().map(WineNotesService::convertRepositoryItemToWineNoteResponse).collect(toList());
+
+        return WineNoteResponse.builder().wineNotes(wineNotes).build();
     }
 
-    public List<WineNoteResponse> getWineNotesByUser(final String user) throws SQLException {
-        final List<RepositoryItem> items = wineRepository.getAllRepositoryItems(WINE_NOTES_REPOSITORY_ITEM);
-        return items.stream()
-                    .filter(ri -> ri.getPropertyValue(WineNotesConstants.PROPERTY_USER).equals(user))
-                    .map(WineNotesService::convertRepositoryItemToWineNoteResponse)
-                    .collect(toList());
+    public WineNoteResponse getWineNotesByUser(final String user) throws SQLException {
+        final List<RepositoryItem> items = wineRepository.getRepositoryItems(user, PROPERTY_USER, WINE_NOTES_REPOSITORY_ITEM);
+        final List<WineNoteOutput> wineNotes = items.stream().map(WineNotesService::convertRepositoryItemToWineNoteResponse).collect(toList());
+
+        return WineNoteResponse.builder().wineNotes(wineNotes).build();
     }
 
-    public List<WineNoteResponse> getWineNotesByWineId(final int wineId) throws SQLException {
-        final List<RepositoryItem> items = wineRepository.getAllRepositoryItems(WINE_NOTES_REPOSITORY_ITEM);
-        return items.stream()
-                    .filter(ri -> ri.getPropertyValue(WineNotesConstants.PROPERTY_WINE_ID).equals(wineId))
-                    .map(WineNotesService::convertRepositoryItemToWineNoteResponse)
-                    .collect(toList());
+    public WineNoteResponse getWineNotesByWineId(final int wineId) throws SQLException {
+        final List<RepositoryItem> items = wineRepository.getRepositoryItems(Integer.toString(wineId), PROPERTY_WINE_ID, WINE_NOTES_REPOSITORY_ITEM);
+        final List<WineNoteOutput> wineNotes = items.stream().map(WineNotesService::convertRepositoryItemToWineNoteResponse).collect(toList());
+
+        return WineNoteResponse.builder().wineNotes(wineNotes).build();
     }
 
-    public List<WineNoteResponse> getWineNotesByWineIdByUser(final int wineId, final String user) throws SQLException {
-        final List<RepositoryItem> items = wineRepository.getAllRepositoryItems(WINE_NOTES_REPOSITORY_ITEM);
-        return items.stream()
-                    .filter(ri -> ri.getPropertyValue(WineNotesConstants.PROPERTY_WINE_ID).equals(wineId))
-                    .filter(ri -> ri.getPropertyValue(PROPERTY_USER).equals(user))
-                    .map(WineNotesService::convertRepositoryItemToWineNoteResponse)
-                    .collect(toList());
+    public WineNoteResponse getWineNotesByWineIdByUser(final int wineId, final String user) throws SQLException {
+        final List<RepositoryItem> items = wineRepository.getRepositoryItems(Integer.toString(wineId), PROPERTY_WINE_ID, WINE_NOTES_REPOSITORY_ITEM);
+        final List<WineNoteOutput> wineNotes = items.stream()
+                                                    .filter(ri -> ri.getPropertyValue(PROPERTY_USER).equals(user))
+                                                    .map(WineNotesService::convertRepositoryItemToWineNoteResponse)
+                                                    .collect(toList());
+
+        return WineNoteResponse.builder().wineNotes(wineNotes).build();
     }
 
-    public List<WineNoteResponse> addWineNotes(final List<WineNoteRequest> requests) {
-        return requests.stream()
-                       .map(this::createItem)
-                       .map(this::addItem)
-                       .map(WineNotesService::convertRepositoryItemToWineNoteResponse)
-                       .collect(toList());
-    }
+    public WineNoteResponse addWineNotes(final WineNoteRequest request) throws SQLException {
+        final WineNoteResponse response = new WineNoteResponse();
+        final List<RepositoryItem> items = wineRepository.getRepositoryItems(Integer.toString(request.getWineId()),
+                                                                             PROPERTY_WINE_ID,
+                                                                             WINE_NOTES_REPOSITORY_ITEM);
+        int maxOrdinal = items.stream().mapToInt(item -> (Integer) item.getPropertyValue(PROPERTY_ORDINAL)).max().orElseGet(() -> -1);
 
-    private MutableRepositoryItem createItem(final WineNoteRequest request) {
-        final MutableRepositoryItem item = wineRepository.createItem(WINE_NOTES_REPOSITORY_ITEM);
-        item.setProperty(PROPERTY_WINE_ID, request.getWineId());
-        item.setProperty(PROPERTY_USER, request.getUser());
-        item.setProperty(PROPERTY_NOTE, request.getNote());
-        item.setProperty(PROPERTY_ORDINAL, request.getOrdinal());
-        item.setProperty(PROPERTY_DATE, request.getDate());
+        for (final String note : request.getWineNotes()) {
+            final MutableRepositoryItem item = wineRepository.createItem(WINE_NOTES_REPOSITORY_ITEM);
+            item.setProperty(PROPERTY_WINE_ID, request.getWineId());
+            item.setProperty(PROPERTY_USER, request.getUser());
+            item.setProperty(PROPERTY_DATE, request.getDate());
+            item.setProperty(PROPERTY_NOTE, note);
+            item.setProperty(PROPERTY_ORDINAL, ++maxOrdinal);
 
-        return item;
+            final RepositoryItem addedItem = addItem(item);
+            response.getWineNotes().add(convertRepositoryItemToWineNoteResponse(addedItem));
+        }
+
+        return response;
     }
 
     private RepositoryItem addItem(final MutableRepositoryItem item) {
@@ -89,14 +94,14 @@ public class WineNotesService {
         }
     }
 
-    private static WineNoteResponse convertRepositoryItemToWineNoteResponse(final RepositoryItem repositoryItem) {
-        final WineNoteResponse response = new WineNoteResponse();
-        response.setId((Integer) repositoryItem.getPropertyValue(WineNotesConstants.PROPERTY_ID));
-        response.setWineId((Integer) repositoryItem.getPropertyValue(WineNotesConstants.PROPERTY_WINE_ID));
-        response.setUser((String) repositoryItem.getPropertyValue(WineNotesConstants.PROPERTY_USER));
-        response.setNote((String) repositoryItem.getPropertyValue(WineNotesConstants.PROPERTY_NOTE));
-        response.setOrdinal((Integer) repositoryItem.getPropertyValue(WineNotesConstants.PROPERTY_ORDINAL));
-        response.setDate((String) repositoryItem.getPropertyValue(WineNotesConstants.PROPERTY_DATE));
-        return response;
+    private static WineNoteOutput convertRepositoryItemToWineNoteResponse(final RepositoryItem repositoryItem) {
+        final WineNoteOutput output = new WineNoteOutput();
+        output.setId((Integer) repositoryItem.getPropertyValue(WineNotesConstants.PROPERTY_ID));
+        output.setWineId((Integer) repositoryItem.getPropertyValue(WineNotesConstants.PROPERTY_WINE_ID));
+        output.setUser((String) repositoryItem.getPropertyValue(WineNotesConstants.PROPERTY_USER));
+        output.setNote((String) repositoryItem.getPropertyValue(WineNotesConstants.PROPERTY_NOTE));
+        output.setOrdinal((Integer) repositoryItem.getPropertyValue(WineNotesConstants.PROPERTY_ORDINAL));
+        output.setDate((String) repositoryItem.getPropertyValue(WineNotesConstants.PROPERTY_DATE));
+        return output;
     }
 }

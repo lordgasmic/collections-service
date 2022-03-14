@@ -1,13 +1,19 @@
 package com.lordgasmic.collections.wine.models;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Data
+@Builder
+@AllArgsConstructor
 public class WineNoteResponse {
-    private int id;
-    private int wineId;
-    private String user;
-    private String note;
-    private int ordinal;
-    private String date;
+    List<WineNoteOutput> wineNotes;
+
+    public WineNoteResponse() {
+        wineNotes = new ArrayList<>();
+    }
 }

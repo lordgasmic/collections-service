@@ -12,7 +12,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Predicate;
 
 import static com.lordgasmic.collections.wine.config.WineRatingConstants.PROPERTY_DATE;
 import static com.lordgasmic.collections.wine.config.WineRatingConstants.PROPERTY_RATING;
@@ -63,10 +65,16 @@ public class WineRatingService {
     }
 
     public List<WineRatingResponse> getWineRatingsByUsersByWineIds(final WineFriendsRequest request) throws SQLException {
+        final List<Predicate<RepositoryItem>> filterList = new ArrayList<>();
+        filterList.add(i -> request.getWineIds().contains((Integer) i.getPropertyValue(PROPERTY_WINE_ID)));
+
+        if (!request.getUsers().get(0).equals("*")) {
+            filterList.add(i -> request.getUsers().contains((String) i.getPropertyValue(PROPERTY_USER)));
+        }
+
         final List<RepositoryItem> items = wineRepository.getAllRepositoryItems(WINE_RATING_REPOSITORY_ITEM);
         return items.stream()
-                    .filter(i -> request.getWineIds().contains((Integer) i.getPropertyValue(PROPERTY_WINE_ID)))
-                    .filter(i -> request.getUsers().contains((String) i.getPropertyValue(PROPERTY_USER)))
+                    .filter(i -> filterList.stream().anyMatch(f -> f.test(i)))
                     .map(WineRatingService::convertRepositoryItemToWineRatingResponse)
                     .collect(toList());
     }

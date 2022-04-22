@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 @Slf4j
 public class RabbitMQListener {
 
-    @RabbitListener(queues = "${javainuse.rabbitmq.queue}")
+    @RabbitListener(queues = "${lordgasmic.rabbitmq.queue}")
     public void recievedMessage(final WineImageTransfer transfer) {
         log.info("Recieved Message From RabbitMQ " + transfer);
     }

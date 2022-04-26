@@ -19,8 +19,12 @@ public class RabbitMQSender {
     @Value("${lordgasmic.rabbitmq.routingKey}")
     private String routingKey;
 
+    @Value("${lordgasmic.rabbitmq.routingKey2}")
+    private String routingKey2;
+
     public void send(final WineImageTransfer transfer) {
         rabbitTemplate.convertAndSend(exchange, routingKey, transfer);
+        rabbitTemplate.convertAndSend(exchange, routingKey2, transfer);
         log.info("Send msg = " + transfer);
     }
 }

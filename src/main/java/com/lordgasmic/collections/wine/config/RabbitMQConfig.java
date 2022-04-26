@@ -1,7 +1,7 @@
 package com.lordgasmic.collections.wine.config;
 
 import org.springframework.amqp.core.Binding;
-import org.springframework.amqp.core.BindingBuilder;
+import org.springframework.amqp.core.Declarables;
 import org.springframework.amqp.core.DirectExchange;
 import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
@@ -18,25 +18,32 @@ public class RabbitMQConfig {
     @Value("${lordgasmic.rabbitmq.queue}")
     private String queueName;
 
+    @Value("${lordgasmic.rabbitmq.queue2}")
+    private String queue2Name;
+
     @Value("${lordgasmic.rabbitmq.exchange}")
     private String exchange;
 
     @Value("${lordgasmic.rabbitmq.routingKey}")
     private String routingKey;
 
-    @Bean
-    Queue queue() {
-        return new Queue(queueName, false);
-    }
+    @Value("${lordgasmic.rabbitmq.routingKey2}")
+    private String routingKey2;
 
     @Bean
-    DirectExchange exchange() {
+    public DirectExchange exchange() {
         return new DirectExchange(exchange);
     }
 
     @Bean
-    Binding binding(final Queue queue, final DirectExchange exchange) {
-        return BindingBuilder.bind(queue).to(exchange).with(routingKey);
+    public Declarables queues() {
+        return new Declarables(new Queue(queueName, false), new Queue(queue2Name, false));
+    }
+
+    @Bean
+    public Declarables bindings() {
+        return new Declarables(new Binding(queueName, Binding.DestinationType.QUEUE, exchange, routingKey, null),
+                               new Binding(queue2Name, Binding.DestinationType.QUEUE, exchange, routingKey2, null));
     }
 
     @Bean

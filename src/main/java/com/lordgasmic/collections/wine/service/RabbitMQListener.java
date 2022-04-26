@@ -13,4 +13,9 @@ public class RabbitMQListener {
     public void recievedMessage(final WineImageTransfer transfer) {
         log.info("Recieved Message From RabbitMQ " + transfer);
     }
+
+    @RabbitListener(queues = "${lordgasmic.rabbitmq.queue2}")
+    public void recievedMessage2(final WineImageTransfer transfer) {
+        log.info("Queue 2 From RabbitMQ " + transfer);
+    }
 }

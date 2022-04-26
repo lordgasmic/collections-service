@@ -24,7 +24,14 @@ public class RabbitMQSender {
 
     public void send(final WineImageTransfer transfer) {
         rabbitTemplate.convertAndSend(exchange, routingKey, transfer);
-        rabbitTemplate.convertAndSend(exchange, routingKey2, transfer);
+        rabbitTemplate.convertAndSend(exchange, routingKey2, mutate(transfer));
         log.info("Send msg = " + transfer);
+    }
+
+    private static WineImageTransfer mutate(final WineImageTransfer transfer) {
+        final WineImageTransfer x2 = new WineImageTransfer();
+        x2.setData(transfer.getData() + " key2");
+        x2.setName(transfer.getName() + " name 222");
+        return x2;
     }
 }

@@ -34,7 +34,7 @@ public class FTPUpload {
         final FTPClient client = new FTPClient();
         ByteArrayInputStream inputStream = null;
         try {
-            client.connect("172.16.0.51");
+            client.connect("172.17.0.1");
             client.login("ftp_user", "ftp_user");
             inputStream = new ByteArrayInputStream(bytes);
 

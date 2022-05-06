@@ -1,12 +1,10 @@
 package com.lordgasmic.collections.wine.service;
 
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.net.ftp.FTPClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.Objects;
 import java.util.UUID;
@@ -31,27 +29,6 @@ public class FTPUpload {
     }
 
     public static void upload(final String fileName, final String directory, final byte[] bytes) {
-        final FTPClient client = new FTPClient();
-        ByteArrayInputStream inputStream = null;
-        try {
-            client.connect("172.17.0.1");
-            client.login("ftp_user", "ftp_user");
-            inputStream = new ByteArrayInputStream(bytes);
 
-            client.makeDirectory(directory);
-            client.storeFile(fileName, inputStream);
-            client.logout();
-        } catch (final IOException e) {
-            throw new RuntimeException(e);
-        } finally {
-            try {
-                if (inputStream != null) {
-                    inputStream.close();
-                }
-                client.disconnect();
-            } catch (final IOException e) {
-                log.error("error trying to close input stream", e);
-            }
-        }
     }
 }

@@ -1,5 +1,7 @@
 package com.lordgasmic.collections.wine.service;
 
+import org.springframework.stereotype.Component;
+
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -7,6 +9,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
+@Component
 public class ImageProcessor {
     private static final int SCALE_TO_HEIGHT = 200;
     private static final int SCALE_TO_THUMBNAIL_HEIGHT = 50;

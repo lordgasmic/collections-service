@@ -3,7 +3,7 @@ package com.lordgasmic.collections.wine.service;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.net.ftp.FTPClient;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.ByteArrayInputStream;
@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.util.Objects;
 import java.util.UUID;
 
-@Component
+@Service
 @Slf4j
 public class FTPUpload {
 

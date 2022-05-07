@@ -1,4 +1,4 @@
-FROM openjdk:14.0.2-oracle
+FROM lordgasmic/jre-ssh
 WORKDIR /vol
 WORKDIR /app
 

@@ -29,6 +29,9 @@ public class FTPUpload {
     }
 
     public static void upload(final String fileName, final String directory, final byte[] bytes) {
-
+        //        JSch jsch = new JSch();
+        //        jsch.setKnownHosts("");
+        //        Session session = jsch.getSession("", "", 22);
+        //
     }
 }

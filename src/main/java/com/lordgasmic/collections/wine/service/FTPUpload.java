@@ -22,10 +22,11 @@ public class FTPUpload {
         upload(file.getName(), dir, file.getBytes());
         final byte[] resizeBytes = imageProcessor.resizeImage(file.getBytes(), shortMimeType);
 
-        final String name = file.getName().substring(0, file.getName().lastIndexOf('.')) + "_tb" + file.getName()
-                                                                                                       .substring(file.getName()
-                                                                                                                      .lastIndexOf('.' + 1));
-        upload(name, dir, resizeBytes);
+        log.info("file name: " + file.getName());
+        //        final String name = file.getName().substring(0, file.getName().lastIndexOf('.')) + "_tb" + file.getName()
+        //                                                                                                       .substring(file.getName()
+        //                                                                                                                      .lastIndexOf('.' + 1));
+        //        upload(name, dir, resizeBytes);
     }
 
     public static void upload(final String fileName, final String directory, final byte[] bytes) {

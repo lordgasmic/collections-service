@@ -15,7 +15,7 @@ import java.util.UUID;
 @Slf4j
 public class FTPUpload {
 
-    private static final String IMAGES = "/images/";
+    private static final String IMAGES = "/images/wine_images/";
 
     @Autowired
     private ImageProcessor imageProcessor;

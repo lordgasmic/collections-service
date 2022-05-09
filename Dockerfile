@@ -1,5 +1,5 @@
 FROM lordgasmic/jre14
-WORKDIR /vol
+WORKDIR /images
 WORKDIR /app
 
 COPY target/*.jar app.jar

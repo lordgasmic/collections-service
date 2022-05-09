@@ -1,4 +1,4 @@
-FROM lordgasmic/jre-ssh
+FROM lordgasmic/jre14
 WORKDIR /vol
 WORKDIR /app
 

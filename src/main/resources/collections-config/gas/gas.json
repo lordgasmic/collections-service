@@ -1,0 +1,43 @@
+{
+  "name": "gas",
+  "tables": [
+    {
+      "name": "gas_vw",
+      "id-column": "id",
+      "id-column-name": "id",
+      "type": "primary",
+      "properties": [
+        {
+          "name": "id",
+          "column": "id",
+          "data-type": "string"
+        },
+        {
+          "name": "date",
+          "column": "date",
+          "data-type": "string"
+        },
+        {
+          "name": "odometer",
+          "column": "odometer",
+          "data-type": "string"
+        },
+        {
+          "name": "cost",
+          "column": "cost",
+          "data-type": "string"
+        },
+        {
+          "name": "gas",
+          "column": "gas",
+          "data-type": "string"
+        },
+        {
+          "name": "vehicle",
+          "column": "vehicle",
+          "data-type": "string"
+        }
+      ]
+    }
+  ]
+}

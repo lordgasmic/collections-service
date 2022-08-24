@@ -10,4 +10,5 @@ public class WineNoteRequest {
     private String user;
     private String date;
     List<String> wineNotes;
+    List<WineNoteUpsert> upsert;
 }

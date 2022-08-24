@@ -8,11 +8,13 @@ import com.lordgasmic.collections.wine.config.WineNotesConstants;
 import com.lordgasmic.collections.wine.models.WineNoteOutput;
 import com.lordgasmic.collections.wine.models.WineNoteRequest;
 import com.lordgasmic.collections.wine.models.WineNoteResponse;
+import com.lordgasmic.collections.wine.models.WineNoteUpsert;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Optional;
 
 import static com.lordgasmic.collections.wine.config.WineNotesConstants.PROPERTY_DATE;
 import static com.lordgasmic.collections.wine.config.WineNotesConstants.PROPERTY_NOTE;
@@ -66,9 +68,9 @@ public class WineNotesService {
 
     public WineNoteResponse addWineNotes(final WineNoteRequest request) throws SQLException {
         final WineNoteResponse response = new WineNoteResponse();
-        final List<RepositoryItem> items = wineRepository.getRepositoryItems(Integer.toString(request.getWineId()),
-                                                                             PROPERTY_WINE_ID,
-                                                                             WINE_NOTES_REPOSITORY_ITEM);
+        List<RepositoryItem> items = wineRepository.getRepositoryItems(Integer.toString(request.getWineId()),
+                                                                       PROPERTY_WINE_ID,
+                                                                       WINE_NOTES_REPOSITORY_ITEM);
         int maxOrdinal = items.stream().mapToInt(item -> (Integer) item.getPropertyValue(PROPERTY_ORDINAL)).max().orElseGet(() -> -1);
 
         for (final String note : request.getWineNotes()) {
@@ -79,16 +81,33 @@ public class WineNotesService {
             item.setProperty(PROPERTY_NOTE, note);
             item.setProperty(PROPERTY_ORDINAL, ++maxOrdinal);
 
-            final RepositoryItem addedItem = addItem(item);
-            response.getWineNotes().add(convertRepositoryItemToWineNoteResponse(addedItem));
+            addItem(item);
+        }
+
+        for (final RepositoryItem item : items) {
+            final MutableRepositoryItem mItem = (MutableRepositoryItem) item;
+            final Optional<WineNoteUpsert> optional = request.getUpsert()
+                                                             .stream()
+                                                             .filter(i -> mItem.getPropertyValue(WineNotesConstants.PROPERTY_ID).equals(i.getId()))
+                                                             .findFirst();
+            if (optional.isPresent()) {
+                final WineNoteUpsert upsert = optional.get();
+                mItem.setProperty(PROPERTY_NOTE, upsert.getNote());
+                wineRepository.updateItem(mItem);
+            }
+        }
+
+        items = wineRepository.getRepositoryItems(Integer.toString(request.getWineId()), PROPERTY_WINE_ID, WINE_NOTES_REPOSITORY_ITEM);
+        for (final RepositoryItem item : items) {
+            response.getWineNotes().add(convertRepositoryItemToWineNoteResponse(item));
         }
 
         return response;
     }
 
-    private RepositoryItem addItem(final MutableRepositoryItem item) {
+    private void addItem(final MutableRepositoryItem item) {
         try {
-            return wineRepository.addItem(item);
+            wineRepository.addItem(item);
         } catch (final SQLException e) {
             throw new RuntimeException(e);
         }

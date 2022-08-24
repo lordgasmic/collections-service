@@ -12,8 +12,18 @@
           "data-type": "string"
         },
         {
+          "name": "title",
+          "column": "title",
+          "data-type": "string"
+        },
+        {
           "name": "fandom",
           "column": "fandom",
+          "data-type": "string"
+        },
+        {
+          "name": "seriesId",
+          "column": "series_id",
           "data-type": "string"
         },
         {

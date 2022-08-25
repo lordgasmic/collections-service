@@ -67,6 +67,7 @@ public class WineNotesService {
     }
 
     public WineNoteResponse addWineNotes(final WineNoteRequest request) throws SQLException {
+        log.info("request: {}", request);
         final WineNoteResponse response = new WineNoteResponse();
         List<RepositoryItem> items = wineRepository.getRepositoryItems(Integer.toString(request.getWineId()),
                                                                        PROPERTY_WINE_ID,

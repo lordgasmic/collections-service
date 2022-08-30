@@ -86,12 +86,12 @@ public class WineNotesService {
 
         for (final RepositoryItem item : items) {
             final MutableRepositoryItem mItem = (MutableRepositoryItem) item;
-            log.info("mItem: {}", item);
             final Optional<WineNoteUpsert> optional = request.getUpsert()
                                                              .stream()
-                                                             .peek(i -> System.out.println(i.getId()))
+                                                             .peek(System.out::println)
                                                              .filter(i -> mItem.getPropertyValue(WineNotesConstants.PROPERTY_ID).equals(i.getId()))
                                                              .findFirst();
+            log.info("optional: {}", optional);
             if (optional.isPresent()) {
                 log.info("found optional");
                 final WineNoteUpsert upsert = optional.get();

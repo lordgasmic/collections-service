@@ -14,7 +14,6 @@ import org.springframework.stereotype.Service;
 
 import java.sql.SQLException;
 import java.util.List;
-import java.util.Optional;
 
 import static com.lordgasmic.collections.wine.config.WineNotesConstants.PROPERTY_DATE;
 import static com.lordgasmic.collections.wine.config.WineNotesConstants.PROPERTY_NOTE;
@@ -86,17 +85,25 @@ public class WineNotesService {
 
         for (final RepositoryItem item : items) {
             final MutableRepositoryItem mItem = (MutableRepositoryItem) item;
-            for (final WineNoteUpsert up : request.getUpsert()) {
-                log.info("upsert id: {}", up.getId());
+
+            WineNoteUpsert found = null;
+            for (final WineNoteUpsert upsert : request.getUpsert()) {
+                log.info("testing equality {}={}", mItem.getPropertyValue(WineNotesConstants.PROPERTY_ID), upsert.getId());
+                if (mItem.getPropertyValue(WineNotesConstants.PROPERTY_ID).equals(upsert.getId())) {
+                    log.info("found equailty");
+                    found = upsert;
+                    break;
+                }
             }
-            final Optional<WineNoteUpsert> optional = request.getUpsert()
-                                                             .stream()
-                                                             .filter(i -> mItem.getPropertyValue(WineNotesConstants.PROPERTY_ID).equals(i.getId()))
-                                                             .findFirst();
-            if (optional.isPresent()) {
+
+
+            //            final Optional<WineNoteUpsert> optional = request.getUpsert()
+            //                                                             .stream()
+            //                                                             .filter(i -> mItem.getPropertyValue(WineNotesConstants.PROPERTY_ID).equals(i.getId()))
+            //                                                             .findFirst();
+            if (found != null) {
                 log.info("found optional");
-                final WineNoteUpsert upsert = optional.get();
-                mItem.setProperty(PROPERTY_NOTE, upsert.getNote());
+                mItem.setProperty(PROPERTY_NOTE, found.getNote());
                 wineRepository.updateItem(mItem);
             }
         }

@@ -86,8 +86,9 @@ public class WineNotesService {
 
         for (final RepositoryItem item : items) {
             final MutableRepositoryItem mItem = (MutableRepositoryItem) item;
-            log.info("mitem: {}", mItem.getPropertyValue(WineNotesConstants.PROPERTY_ID));
-            request.getUpsert().stream().peek(System.out::println).count();
+            for (final WineNoteUpsert up : request.getUpsert()) {
+                log.info("upsert id: {}", up.getId());
+            }
             final Optional<WineNoteUpsert> optional = request.getUpsert()
                                                              .stream()
                                                              .filter(i -> mItem.getPropertyValue(WineNotesConstants.PROPERTY_ID).equals(i.getId()))

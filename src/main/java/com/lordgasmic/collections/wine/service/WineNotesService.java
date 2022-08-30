@@ -105,7 +105,7 @@ public class WineNotesService {
                                                              .findFirst();
             if (optional.isPresent()) {
                 log.info("found optional");
-                mItem.setProperty(PROPERTY_NOTE, optional.get());
+                mItem.setProperty(PROPERTY_NOTE, optional.get().getNote());
                 wineRepository.updateItem(mItem, PROPERTY_NOTE);
             }
         }

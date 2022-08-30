@@ -91,6 +91,7 @@ public class WineNotesService {
                                                              .filter(i -> mItem.getPropertyValue(WineNotesConstants.PROPERTY_ID).equals(i.getId()))
                                                              .findFirst();
             if (optional.isPresent()) {
+                log.info("found optional");
                 final WineNoteUpsert upsert = optional.get();
                 mItem.setProperty(PROPERTY_NOTE, upsert.getNote());
                 wineRepository.updateItem(mItem);

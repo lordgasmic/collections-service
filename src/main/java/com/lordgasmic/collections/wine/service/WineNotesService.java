@@ -86,18 +86,6 @@ public class WineNotesService {
 
         for (final RepositoryItem item : items) {
             final MutableRepositoryItem mItem = (MutableRepositoryItem) item;
-
-            //            final WineNoteUpsert found = null;
-            //            for (final WineNoteUpsert upsert : request.getUpsert()) {
-            //                log.info("testing equality {}={}", mItem.getPropertyValue(WineNotesConstants.PROPERTY_ID), upsert.getId());
-            //                if (mItem.getPropertyValue(WineNotesConstants.PROPERTY_ID).equals(Integer.parseInt(upsert.getId()))) {
-            //                    log.info("found equailty");
-            //                    found = upsert;
-            //                    break;
-            //                }
-            //            }
-
-
             final Optional<WineNoteUpsert> optional = request.getUpsert()
                                                              .stream()
                                                              .filter(i -> mItem.getPropertyValue(WineNotesConstants.PROPERTY_ID)

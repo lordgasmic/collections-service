@@ -1,11 +1,13 @@
 package com.lordgasmic.collections.wine.controller;
 
 import com.lordgasmic.collections.wine.models.WineFriendsRequest;
+import com.lordgasmic.collections.wine.models.WineRatingEditRequest;
 import com.lordgasmic.collections.wine.models.WineRatingRequest;
 import com.lordgasmic.collections.wine.service.WineRatingService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -44,5 +46,10 @@ public class WineRatingController {
     @PostMapping("/api/v1/wineRating")
     public Object getWineRatingByUsersByWineIds(@RequestBody final WineFriendsRequest request) throws SQLException {
         return service.getWineRatingsByUsersByWineIds(request);
+    }
+
+    @PatchMapping("/api/v1/wineRating")
+    public Object editWineRating(@RequestBody final WineRatingEditRequest request) throws SQLException {
+        return service.editWineRating(request);
     }
 }

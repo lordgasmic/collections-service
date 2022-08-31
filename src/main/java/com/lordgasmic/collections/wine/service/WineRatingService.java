@@ -6,6 +6,7 @@ import com.lordgasmic.collections.repository.MutableRepositoryItem;
 import com.lordgasmic.collections.repository.RepositoryItem;
 import com.lordgasmic.collections.wine.config.WineRatingConstants;
 import com.lordgasmic.collections.wine.models.WineFriendsRequest;
+import com.lordgasmic.collections.wine.models.WineRatingEditRequest;
 import com.lordgasmic.collections.wine.models.WineRatingRequest;
 import com.lordgasmic.collections.wine.models.WineRatingResponse;
 import lombok.extern.slf4j.Slf4j;
@@ -89,6 +90,14 @@ public class WineRatingService {
 
         final RepositoryItem addedItem = wineRepository.addItem(item);
         return convertRepositoryItemToWineRatingResponse(addedItem);
+    }
+
+    public WineRatingResponse editWineRating(final WineRatingEditRequest request) throws SQLException {
+        final MutableRepositoryItem item = (MutableRepositoryItem) wineRepository.getRepositoryItem(request.getId(), WINE_RATING_REPOSITORY_ITEM);
+        item.setProperty(PROPERTY_RATING, request.getRating());
+
+        final RepositoryItem updatedItem = wineRepository.updateItem(item, PROPERTY_RATING);
+        return convertRepositoryItemToWineRatingResponse(updatedItem);
     }
 
     private static WineRatingResponse convertRepositoryItemToWineRatingResponse(final RepositoryItem repositoryItem) {

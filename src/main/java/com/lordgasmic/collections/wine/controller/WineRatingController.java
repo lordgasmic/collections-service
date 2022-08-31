@@ -47,7 +47,7 @@ public class WineRatingController {
         return service.getWineRatingsByUsersByWineIds(request);
     }
 
-    @PutMapping("/api/v1/wineRating")
+    @PutMapping("/api/v1/wineRating/edit")
     public Object editWineRating(@RequestBody final WineRatingEditRequest request) throws SQLException {
         return service.editWineRating(request);
     }

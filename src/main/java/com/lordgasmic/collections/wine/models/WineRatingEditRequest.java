@@ -5,5 +5,5 @@ import lombok.Data;
 @Data
 public class WineRatingEditRequest {
     private String id;
-    private int rating;
+    private String rating;
 }

@@ -1,0 +1,38 @@
+{
+  "name": "patternInventory",
+  "tables": [
+    {
+      "name": "pattern_inventory_vw",
+      "id-column": "id",
+      "id-column-name": "id",
+      "type": "primary",
+      "properties": [
+        {
+          "name": "id",
+          "column": "id",
+          "data-type": "string"
+        },
+        {
+          "name": "number",
+          "column": "number",
+          "data-type": "string"
+        },
+        {
+          "name": "name",
+          "column": "name",
+          "data-type": "string"
+        },
+        {
+          "name": "color",
+          "column": "color",
+          "data-type": "string"
+        },
+        {
+          "name": "owned",
+          "column": "owned",
+          "data-type": "int"
+        }
+      ]
+    }
+  ]
+}

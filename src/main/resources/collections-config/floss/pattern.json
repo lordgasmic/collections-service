@@ -1,0 +1,53 @@
+{
+  "name": "pattern",
+  "tables": [
+    {
+      "name": "pattern_vw",
+      "id-column": "id",
+      "id-column-name": "id",
+      "type": "primary",
+      "properties": [
+        {
+          "name": "id",
+          "column": "id",
+          "data-type": "string"
+        },
+        {
+          "name": "name",
+          "column": "name",
+          "data-type": "string"
+        },
+        {
+          "name": "stitchCount",
+          "column": "stitch_count",
+          "data-type": "int"
+        },
+        {
+          "name": "clothType",
+          "column": "cloth_type",
+          "data-type": "string"
+        },
+        {
+          "name": "size",
+          "column": "size",
+          "data-type": "int"
+        },
+        {
+          "name": "finishedSize",
+          "column": "finished_size",
+          "data-type": "string"
+        },
+        {
+          "name": "threadsPerStitch",
+          "column": "threads_per_stitch",
+          "data-type": "int"
+        },
+        {
+          "name": "totalColors",
+          "column": "total_colors",
+          "data-type": "int"
+        }
+      ]
+    }
+  ]
+}

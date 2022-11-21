@@ -1,0 +1,48 @@
+{
+  "name": "patternThread",
+  "tables": [
+    {
+      "name": "pattern_thread_vw",
+      "id-column": "id",
+      "id-column-name": "id",
+      "type": "primary",
+      "properties": [
+        {
+          "name": "id",
+          "column": "id",
+          "data-type": "string"
+        },
+        {
+          "name": "name",
+          "column": "name",
+          "data-type": "string"
+        },
+        {
+          "name": "brand",
+          "column": "brand",
+          "data-type": "string"
+        },
+        {
+          "name": "colorCode",
+          "column": "color_code",
+          "data-type": "string"
+        },
+        {
+          "name": "cmRequired",
+          "column": "cm_required",
+          "data-type": "string"
+        },
+        {
+          "name": "stitchesPerInch",
+          "column": "stitches_per_inch",
+          "data-type": "int"
+        },
+        {
+          "name": "aidaCount",
+          "column": "aida_count",
+          "data-type": "int"
+        }
+      ]
+    }
+  ]
+}

@@ -10,6 +10,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.sql.SQLException;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import static com.lordgasmic.collections.gas.config.GasConstants.GAS_REPOSITORY_ITEM;
 import static com.lordgasmic.collections.gas.config.GasConstants.PROPERTY_COST;
@@ -41,6 +43,11 @@ public class GasService {
         final RepositoryItem addedItem = repository.addItem(item);
 
         return convertRepositoryItemToGasResponse(addedItem);
+    }
+
+    public List<GasResponse> getGas(final String vehicle) throws SQLException {
+        final List<RepositoryItem> items = repository.getRepositoryItems(vehicle, "vehicle", GAS_REPOSITORY_ITEM);
+        return items.stream().map(GasService::convertRepositoryItemToGasResponse).collect(Collectors.toList());
     }
 
     private static GasResponse convertRepositoryItemToGasResponse(final RepositoryItem repositoryItem) {

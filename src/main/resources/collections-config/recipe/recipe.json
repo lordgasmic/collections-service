@@ -1,0 +1,33 @@
+{
+  "name": "recipe",
+  "tables": [
+    {
+      "name": "recipe_vw",
+      "id-column": "recipe_id",
+      "id-column-name": "recipeId",
+      "type": "primary",
+      "properties": [
+        {
+          "name": "recipeId",
+          "column": "recipe_id",
+          "data-type": "int"
+        },
+        {
+          "name": "name",
+          "column": "name",
+          "data-type": "string"
+        },
+        {
+          "name": "description",
+          "column": "description",
+          "data-type": "string"
+        },
+        {
+          "name": "image",
+          "column": "image",
+          "data-type": "string"
+        }
+      ]
+    }
+  ]
+}

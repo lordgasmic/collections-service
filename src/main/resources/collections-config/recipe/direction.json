@@ -1,0 +1,33 @@
+{
+  "name": "direction",
+  "tables": [
+    {
+      "name": "direction_vw",
+      "id-column": "direction_id",
+      "id-column-name": "directionId",
+      "type": "primary",
+      "properties": [
+        {
+          "name": "directionId",
+          "column": "direction_id",
+          "data-type": "int"
+        },
+        {
+          "name": "recipeId",
+          "column": "recipe_id",
+          "data-type": "int"
+        },
+        {
+          "name": "ordinal",
+          "column": "ordinal",
+          "data-type": "int"
+        },
+        {
+          "name": "direction",
+          "column": "direction",
+          "data-type": "string"
+        }
+      ]
+    }
+  ]
+}

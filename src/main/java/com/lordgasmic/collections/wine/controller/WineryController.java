@@ -18,8 +18,12 @@ import java.util.List;
 @Slf4j
 public class WineryController {
 
+    private final WineryService service;
+
     @Autowired
-    private WineryService service;
+    public WineryController(WineryService service) {
+        this.service = service;
+    }
 
     @GetMapping("/api/v1/wineries")
     public List<WineryResponse> getWineries() throws SQLException {

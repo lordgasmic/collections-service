@@ -1,0 +1,33 @@
+{
+  "name": "tag",
+  "tables": [
+    {
+      "name": "tag_vw",
+      "id-column": "tag_id",
+      "id-column-name": "tagId",
+      "type": "primary",
+      "properties": [
+        {
+          "name": "tagId",
+          "column": "tag_id",
+          "data-type": "int"
+        },
+        {
+          "name": "recipeId",
+          "column": "recipe_id",
+          "data-type": "int"
+        },
+        {
+          "name": "ordinal",
+          "column": "ordinal",
+          "data-type": "int"
+        },
+        {
+          "name": "tag",
+          "column": "tag",
+          "data-type": "string"
+        }
+      ]
+    }
+  ]
+}

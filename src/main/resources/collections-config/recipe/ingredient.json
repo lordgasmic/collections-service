@@ -1,0 +1,48 @@
+{
+  "name": "ingredient",
+  "tables": [
+    {
+      "name": "ingredient_vw",
+      "id-column": "ingredient_id",
+      "id-column-name": "ingredientId",
+      "type": "primary",
+      "properties": [
+        {
+          "name": "ingredientId",
+          "column": "ingredient_id",
+          "data-type": "int"
+        },
+        {
+          "name": "recipeId",
+          "column": "recipe_id",
+          "data-type": "int"
+        },
+        {
+          "name": "ordinal",
+          "column": "ordinal",
+          "data-type": "int"
+        },
+        {
+          "name": "quantity",
+          "column": "quantity",
+          "data-type": "string"
+        },
+        {
+          "name": "uom",
+          "column": "uom",
+          "data-type": "string"
+        },
+        {
+          "name": "ingredient",
+          "column": "ingredient",
+          "data-type": "string"
+        },
+        {
+          "name": "preparation",
+          "column": "preparation",
+          "data-type": "string"
+        }
+      ]
+    }
+  ]
+}

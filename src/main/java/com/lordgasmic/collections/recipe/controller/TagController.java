@@ -16,12 +16,12 @@ public class TagController {
     private final TagService service;
 
     @Autowired
-    public TagController(TagService service) {
+    public TagController(final TagService service) {
         this.service = service;
     }
 
-    @GetMapping("/api/v1/tag/{recipeId")
-    public List<TagResponse> getTagsForRecipe(@PathVariable int recipeId) throws SQLException {
+    @GetMapping("/api/v1/tag/{recipeId}")
+    public List<TagResponse> getTagsForRecipe(@PathVariable final int recipeId) throws SQLException {
         return service.getTagsForRecipeId(recipeId);
     }
 }

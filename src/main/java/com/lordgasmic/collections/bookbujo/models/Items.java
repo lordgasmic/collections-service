@@ -1,2 +1,7 @@
-package com.lordgasmic.collections.bookbujo.models;public class Items {
+package com.lordgasmic.collections.bookbujo.models;
+
+import lombok.Data;
+
+@Data
+public class Items {
 }

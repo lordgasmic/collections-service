@@ -21,15 +21,16 @@ public class WineNotesController {
     private WineNotesService service;
 
     @GetMapping("/api/v1/wineNotes")
-    public Object getWineNotes(@RequestParam("user") final String user, @RequestParam("wineId") final Optional<Integer> wineId) throws SQLException {
-        if (user == null && wineId.isEmpty()) {
+    public Object getWineNotes(@RequestParam("user") final Optional<String> user,
+                               @RequestParam("wineId") final Optional<Integer> wineId) throws SQLException {
+        if (user.isEmpty() && wineId.isEmpty()) {
             return service.getAllWineNotes();
-        } else if (user != null && wineId.isPresent()) {
-            return service.getWineNotesByWineIdByUser(wineId.get(), user);
+        } else if (user.isPresent() && wineId.isPresent()) {
+            return service.getWineNotesByWineIdByUser(wineId.get(), user.get());
         } else if (wineId.isPresent()) {
             return service.getWineNotesByWineId(wineId.get());
         } else {
-            return service.getWineNotesByUser(user);
+            return service.getWineNotesByUser(user.get());
         }
     }
 

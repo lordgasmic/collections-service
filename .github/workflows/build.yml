@@ -13,7 +13,7 @@ jobs:
   vars:
     runs-on: ubuntu-latest
     outputs:
-      output1: ${{ steps.step1.date }}
+      output1: ${{ steps.step1.outputs.date }}
     steps:
       - id: step1
         run: echo "date=lordgasmic/collection-service:$(date +%Y%m%d%H%M)" >> $GITHUB_OUTPUT

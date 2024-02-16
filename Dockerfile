@@ -1,4 +1,4 @@
-FROM lordgasmic/jre14
+FROM lordgasmic/jre14:1.0.0
 WORKDIR /images
 WORKDIR /app
 

@@ -16,8 +16,8 @@ jobs:
       output1: ${{ steps.step1.outputs.date }}
     steps:
       - id: step1
-        #        run: echo "::set-output name=date::lordgasmic/collection-service:$(date +%Y%m%d%H%M)"
         run: echo "date=lordgasmic/collection-service:$(date +%Y%m%d%H%M)" >> $GITHUB_STATE
+        #        run: echo "::set-output name=date::lordgasmic/collection-service:$(date +%Y%m%d%H%M)"
 
   build:
     needs: vars

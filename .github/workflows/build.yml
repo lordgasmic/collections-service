@@ -43,3 +43,10 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
       - name: Docker Push
         run: docker push ${{ needs.vars.outputs.output1 }}
+
+  output:
+    needs: vars
+    runs-on: ubuntu-latest
+    steps:
+      - name: Echo Docker Tag
+        run: echo ${{ needs.vars.outputs.output1 }}

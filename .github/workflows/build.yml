@@ -49,4 +49,5 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Echo Docker Tag
-        run: echo ${{ needs.vars.outputs.output1 }}
+        run: |
+          echo ${{ needs.vars.outputs.output1 }}

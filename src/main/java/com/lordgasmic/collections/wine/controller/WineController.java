@@ -4,7 +4,6 @@ import com.lordgasmic.collections.wine.models.WineRequest;
 import com.lordgasmic.collections.wine.models.WineResponse;
 import com.lordgasmic.collections.wine.service.WineService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -18,8 +17,11 @@ import java.util.Optional;
 @Slf4j
 public class WineController {
 
-    @Autowired
-    private WineService service;
+    private final WineService service;
+
+    public WineController(WineService service) {
+        this.service = service;
+    }
 
     @GetMapping("/api/v1/wines")
     public Object getWines(@RequestParam("wineId") final Optional<String> wineId,

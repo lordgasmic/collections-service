@@ -16,7 +16,7 @@ jobs:
       output1: ${{ steps.step1.outputs.date }}
     steps:
       - id: step1
-        run: echo "date=lordgasmic/collection-service:$(date +%Y%m%d%H%M)" >> $GITHUB_OUTPUT
+        run: echo "date=lordgasmic/collection-service" >> $GITHUB_OUTPUT
 
   build:
     needs: vars

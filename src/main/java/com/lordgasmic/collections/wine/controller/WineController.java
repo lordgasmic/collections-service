@@ -29,6 +29,7 @@ public class WineController {
         if (wineId.isEmpty() && wineryId.isEmpty()) {
             return service.getAllWines();
         } else if (wineId.isPresent()) {
+            System.out.println("wineid: " + wineId.get());
             return service.getWine(wineId.get());
         } else {
             return service.getWinesByWineryId(wineryId.get());
